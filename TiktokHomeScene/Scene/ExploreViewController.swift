@@ -15,6 +15,9 @@ class ExploreViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.backgroundColor = .black
+        self.navigationController?.navigationBar.barTintColor = .black
+        self.navigationController?.navigationBar.isTranslucent = false
         // Do any additional setup after loading the view.
     }
     override func loadView() {
