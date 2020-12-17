@@ -127,7 +127,7 @@ class VideoReactsView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.alignment = .fill
+        stack.alignment = .center
         stack.spacing = 10
         return stack
     }()
@@ -189,7 +189,7 @@ class ReactsSingleView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.alignment = .trailing
+        stack.alignment = .center
         stack.spacing = 1
         return stack
     }()
@@ -205,7 +205,7 @@ class ReactsSingleView: UIView {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = .clear
         image.image = #imageLiteral(resourceName: "basic_eye-512")
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         return image
     }()
@@ -243,6 +243,7 @@ class ReactsSingleView: UIView {
         ])
         self.verticalStackView.addArrangedSubview(self.reactImage)
         self.verticalStackView.addArrangedSubview(self.reactLabel)
+
 
     }
 }
