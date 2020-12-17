@@ -25,6 +25,13 @@ class VideoPlayerView : UIView {
         view.startAnimating()
         return view
     }()
+    lazy var videoReactsView : VideoReactsView = {
+        var view = VideoReactsView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }()
+
     override init(frame:CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .black
@@ -46,6 +53,7 @@ class VideoPlayerView : UIView {
             guard let self = self else {return}
             self.layoutUserInterFace()
             self.setupGradientLayer()
+            self.setupVideoReactsView()
         }
     }
     private func playVideo() {
@@ -78,6 +86,17 @@ class VideoPlayerView : UIView {
         gradientLayer.locations = [0.7 , 1.2]
         self.controlsContainerView.layer.addSublayer(gradientLayer)
     }
+    private func setupVideoReactsView() {
+        self.addSubview(self.videoReactsView)
+        NSLayoutConstraint.activate([
+            self.videoReactsView.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: -20),
+            self.videoReactsView.trailingAnchor.constraint(equalTo: self.trailingAnchor , constant: -12),
+//            self.videoReactsView.widthAnchor.constraint(equalToConstant: 60),
+            self.videoReactsView.heightAnchor.constraint(equalToConstant: (3 * 40) + (2*10))
+        
+        
+        ])
+    }
     deinit {
         print("De init")
     }
@@ -99,5 +118,131 @@ extension VideoPlayerView  {
                 }
             }
         }
+    }
+}
+
+class VideoReactsView: UIView {
+    lazy var verticalStackView: UIStackView = {
+        var stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        stack.spacing = 10
+        return stack
+    }()
+    lazy var reactButton:ReactsSingleView = {
+       var bu = ReactsSingleView()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .clear
+        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        return bu
+    }()
+    lazy var seenButton:ReactsSingleView = {
+       var bu = ReactsSingleView()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .clear
+        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        return bu
+    }()
+    lazy var durationButton:ReactsSingleView = {
+       var bu = ReactsSingleView()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .clear
+        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        return bu
+    }()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.layoutUserInterFace()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func layoutUserInterFace() {
+        self.AddSubViews()
+        self.setupStackView()
+    }
+    private func AddSubViews() {
+        self.addSubview(self.verticalStackView)
+        
+    }
+    private func setupStackView() {
+        NSLayoutConstraint.activate([
+            self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        self.verticalStackView.addArrangedSubview(self.seenButton)
+        self.verticalStackView.addArrangedSubview(self.reactButton)
+        self.verticalStackView.addArrangedSubview(self.durationButton)
+
+    }
+    
+}
+
+class ReactsSingleView: UIView {
+    lazy var verticalStackView: UIStackView = {
+        var stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .trailing
+        stack.spacing = 1
+        return stack
+    }()
+    lazy var reactButton:UIButton = {
+       var bu = UIButton()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .white
+        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        return bu
+    }()
+    lazy var reactImage: UIImageView = {
+       var image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.backgroundColor = .clear
+        image.image = #imageLiteral(resourceName: "basic_eye-512")
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        return image
+    }()
+    lazy var reactLabel: UILabel = {
+       var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "24K"
+        label.textAlignment = .right
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        label.backgroundColor = .clear
+        return label
+    }()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.layoutUserInterFace()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func layoutUserInterFace() {
+        self.AddSubViews()
+        self.setupStackView()
+    }
+    private func AddSubViews() {
+        self.addSubview(self.verticalStackView)
+    }
+    private func setupStackView() {
+        NSLayoutConstraint.activate([
+            self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        self.verticalStackView.addArrangedSubview(self.reactImage)
+        self.verticalStackView.addArrangedSubview(self.reactLabel)
+
     }
 }
