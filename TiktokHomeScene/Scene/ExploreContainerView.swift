@@ -60,11 +60,11 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(VideoCell.self), for: indexPath) as? VideoCell
-        if indexPath.item == 0 {
+//        if indexPath.item == 0 {
             if let url = URL(string: DataService.shared.getExploreVideos()[indexPath.item].videoURL) {
                 cell?.configureCell(withVideo:url)
             }
-        }
+//        }
 
         return cell!
     }
@@ -82,18 +82,18 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.prepareForReuse()
     }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.videoCollection.visibleCells.forEach({ (cell) in
-            if cell.isKind(of: VideoCell.self) {
-                if let indexPath = self.videoCollection.indexPathsForVisibleItems.first {
-                    if let cell = cell as? VideoCell {
-                        if let url = URL(string: DataService.shared.getExploreVideos()[indexPath.item].videoURL) {
-                            cell.configureCell(withVideo: url)
-                        }
-                    }
-                }
-            }
-        })
-    }
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        self.videoCollection.visibleCells.forEach({ (cell) in
+//            if cell.isKind(of: VideoCell.self) {
+//                if let indexPath = self.videoCollection.indexPathsForVisibleItems.first {
+//                    if let cell = cell as? VideoCell {
+//                        if let url = URL(string: DataService.shared.getExploreVideos()[indexPath.item].videoURL) {
+//                            cell.configureCell(withVideo: url)
+//                        }
+//                    }
+//                }
+//            }
+//        })
+//    }
 }
 
