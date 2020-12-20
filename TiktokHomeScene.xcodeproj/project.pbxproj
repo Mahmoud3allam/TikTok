@@ -12,6 +12,7 @@
 		1852B725258B60AF00E26DDE /* VideoReactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852B724258B60AF00E26DDE /* VideoReactsView.swift */; };
 		1852B727258B60C200E26DDE /* ReactsSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852B726258B60C200E26DDE /* ReactsSingleView.swift */; };
 		1852B729258B610E00E26DDE /* VideoPlayerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852B728258B610E00E26DDE /* VideoPlayerHeader.swift */; };
+		18C077D0258F522100EAF810 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C077CF258F522100EAF810 /* CacheManager.swift */; };
 		18D02A4F258A2510006E721F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D02A4E258A2510006E721F /* AppDelegate.swift */; };
 		18D02A53258A2510006E721F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D02A52258A2510006E721F /* ExploreViewController.swift */; };
 		18D02A58258A2512006E721F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D02A57258A2512006E721F /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		1852B724258B60AF00E26DDE /* VideoReactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReactsView.swift; sourceTree = "<group>"; };
 		1852B726258B60C200E26DDE /* ReactsSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactsSingleView.swift; sourceTree = "<group>"; };
 		1852B728258B610E00E26DDE /* VideoPlayerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerHeader.swift; sourceTree = "<group>"; };
+		18C077CF258F522100EAF810 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		18D02A4B258A2510006E721F /* TiktokHomeScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiktokHomeScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D02A4E258A2510006E721F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D02A52258A2510006E721F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				18D85203258A7C92002A1835 /* DataService.swift */,
+				18C077CF258F522100EAF810 /* CacheManager.swift */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				1844B82F258A2782003193F9 /* VideoCell.swift in Sources */,
 				18D02A4F258A2510006E721F /* AppDelegate.swift in Sources */,
 				18D85204258A7C92002A1835 /* DataService.swift in Sources */,
+				18C077D0258F522100EAF810 /* CacheManager.swift in Sources */,
 				1844B82C258A268B003193F9 /* ExploreContainerView.swift in Sources */,
 				1852B729258B610E00E26DDE /* VideoPlayerHeader.swift in Sources */,
 				18D85201258A3AAA002A1835 /* VideoPlayerView.swift in Sources */,

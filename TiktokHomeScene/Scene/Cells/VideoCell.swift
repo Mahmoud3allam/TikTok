@@ -63,10 +63,40 @@ class VideoCell: UICollectionViewCell {
             self.playerContainer.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
         ])
     }
-    func configureCell(withVideo  url:URL) {
+    func configureCell(withVideo  url:URL , isMuted:Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {return}
-            self.playerContainer.setupPlayer(url: url)
+            if let cachedItemCount = CacheManager.shared.getNumberOfCachedItems() {
+                if cachedItemCount >= 10 {
+                    CacheManager.shared.clearCache()
+                    print("Cache Cleared")
+                }
+            }
+            CacheManager.shared.isFileCashed(stringUrl: url.absoluteString) {[weak self] (isFileCashed) in
+                guard let self = self else {return}
+                switch isFileCashed {
+                case .success(let filePathURL):
+                    self.playerContainer.setupPlayer(url: filePathURL)
+                case .failure(let err):
+                    self.playerContainer.setupPlayer(url: url)
+                    CacheManager.shared.cachFile(stringUrl: url.absoluteString) { [weak self] (result) in
+                        guard let self = self else {return}
+                        switch result {
+                        case .success(let _) :
+                            print("cached")
+                        case .failure(let _) :
+                            print("can't cach")
+                        }
+                    }
+                }
+                if isMuted {
+                    self.playerContainer.player?.isMuted = true
+                }else{
+                    self.playerContainer.player?.isMuted = false
+                }
+            }
         }
     }
+    
 }
+
