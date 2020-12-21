@@ -19,7 +19,7 @@ class ExploreViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .black
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.isNavigationBarHidden = true
-        CacheManager.shared.clearCache()
+       // CacheManager.shared.clearCache()
         // Do any additional setup after loading the view.
     }
     override func loadView() {
@@ -27,7 +27,7 @@ class ExploreViewController: UIViewController {
         self.view = containerView
     }
     override var prefersStatusBarHidden: Bool {
-        return false
+        return true
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -42,4 +42,3 @@ class ExploreViewController: UIViewController {
     
     
 }
-

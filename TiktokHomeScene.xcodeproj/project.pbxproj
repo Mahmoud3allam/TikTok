@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182236052590813500A22B6B /* VideoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182236042590813500A22B6B /* VideoInfoView.swift */; };
+		182236082590846400A22B6B /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182236072590846400A22B6B /* UIView.swift */; };
+		1822360A2590880500A22B6B /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182236092590880500A22B6B /* MarqueeLabel.swift */; };
+		1822360F25909A7B00A22B6B /* Tajawal-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1822360C25909A7B00A22B6B /* Tajawal-Regular.ttf */; };
+		1822361025909A7B00A22B6B /* Tajawal-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1822360D25909A7B00A22B6B /* Tajawal-Bold.ttf */; };
+		1822361125909A7B00A22B6B /* Tajawal-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1822360E25909A7B00A22B6B /* Tajawal-Medium.ttf */; };
 		1844B82C258A268B003193F9 /* ExploreContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1844B82B258A268B003193F9 /* ExploreContainerView.swift */; };
 		1844B82F258A2782003193F9 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1844B82E258A2782003193F9 /* VideoCell.swift */; };
 		1852B725258B60AF00E26DDE /* VideoReactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852B724258B60AF00E26DDE /* VideoReactsView.swift */; };
@@ -22,6 +28,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		182236042590813500A22B6B /* VideoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoView.swift; sourceTree = "<group>"; };
+		182236072590846400A22B6B /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		182236092590880500A22B6B /* MarqueeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
+		1822360C25909A7B00A22B6B /* Tajawal-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tajawal-Regular.ttf"; sourceTree = "<group>"; };
+		1822360D25909A7B00A22B6B /* Tajawal-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tajawal-Bold.ttf"; sourceTree = "<group>"; };
+		1822360E25909A7B00A22B6B /* Tajawal-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tajawal-Medium.ttf"; sourceTree = "<group>"; };
 		1844B82B258A268B003193F9 /* ExploreContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreContainerView.swift; sourceTree = "<group>"; };
 		1844B82E258A2782003193F9 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		1852B724258B60AF00E26DDE /* VideoReactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReactsView.swift; sourceTree = "<group>"; };
@@ -49,6 +61,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		182236062590845D00A22B6B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				182236072590846400A22B6B /* UIView.swift */,
+				182236092590880500A22B6B /* MarqueeLabel.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1822360B25909A7300A22B6B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1822360D25909A7B00A22B6B /* Tajawal-Bold.ttf */,
+				1822360E25909A7B00A22B6B /* Tajawal-Medium.ttf */,
+				1822360C25909A7B00A22B6B /* Tajawal-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		1844B82A258A267B003193F9 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +117,8 @@
 		18D02A4D258A2510006E721F /* TiktokHomeScene */ = {
 			isa = PBXGroup;
 			children = (
+				1822360B25909A7300A22B6B /* Fonts */,
+				182236062590845D00A22B6B /* Extensions */,
 				18D85202258A7C8A002A1835 /* DataService */,
 				18D851FF258A3A92002A1835 /* VideoPlayer */,
 				1844B82A258A267B003193F9 /* Scene */,
@@ -104,6 +137,7 @@
 				1852B724258B60AF00E26DDE /* VideoReactsView.swift */,
 				1852B726258B60C200E26DDE /* ReactsSingleView.swift */,
 				1852B728258B610E00E26DDE /* VideoPlayerHeader.swift */,
+				182236042590813500A22B6B /* VideoInfoView.swift */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -175,7 +209,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1822360F25909A7B00A22B6B /* Tajawal-Regular.ttf in Resources */,
 				18D02A5B258A2512006E721F /* LaunchScreen.storyboard in Resources */,
+				1822361025909A7B00A22B6B /* Tajawal-Bold.ttf in Resources */,
+				1822361125909A7B00A22B6B /* Tajawal-Medium.ttf in Resources */,
 				18D02A58258A2512006E721F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,12 +226,15 @@
 			files = (
 				1852B727258B60C200E26DDE /* ReactsSingleView.swift in Sources */,
 				1852B725258B60AF00E26DDE /* VideoReactsView.swift in Sources */,
+				1822360A2590880500A22B6B /* MarqueeLabel.swift in Sources */,
+				182236052590813500A22B6B /* VideoInfoView.swift in Sources */,
 				18D02A53258A2510006E721F /* ExploreViewController.swift in Sources */,
 				1844B82F258A2782003193F9 /* VideoCell.swift in Sources */,
 				18D02A4F258A2510006E721F /* AppDelegate.swift in Sources */,
 				18D85204258A7C92002A1835 /* DataService.swift in Sources */,
 				18C077D0258F522100EAF810 /* CacheManager.swift in Sources */,
 				1844B82C258A268B003193F9 /* ExploreContainerView.swift in Sources */,
+				182236082590846400A22B6B /* UIView.swift in Sources */,
 				1852B729258B610E00E26DDE /* VideoPlayerHeader.swift in Sources */,
 				18D85201258A3AAA002A1835 /* VideoPlayerView.swift in Sources */,
 			);

@@ -22,6 +22,7 @@ class ExploreViewContainer: UIView {
         collection.isPrefetchingEnabled = false
         collection.bounces = false
         collection.contentMode = .scaleAspectFill
+        collection.allowsSelection = false
         collection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collection.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collection.register(VideoCell.self, forCellWithReuseIdentifier: NSStringFromClass(VideoCell.self))
@@ -56,8 +57,9 @@ class ExploreViewContainer: UIView {
         self.addSubview(self.videoCollection)
     }
     private func setupCollectionView() {
+        let statusBarHeight = self.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         NSLayoutConstraint.activate([
-            self.videoCollection.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
+            self.videoCollection.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor , constant: -statusBarHeight),
             self.videoCollection.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.videoCollection.rightAnchor.constraint(equalTo: self.rightAnchor),
             self.videoCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -96,27 +98,27 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected")
-        let visableVells = self.videoCollection.visibleCells
-        switch self.isMuted {
-        case true:
-            visableVells.forEach { (cell) in
-                if let cell = cell as? VideoCell {
-                    if let player = cell.playerContainer.player {
-                        player.isMuted = false
-                    }
-                }
-            }
-        case false:
-            visableVells.forEach { (cell) in
-                if let cell = cell as? VideoCell {
-                    if let player = cell.playerContainer.player {
-                        player.isMuted = true
-                    }
-                }
-            }
-            
-        }
-        self.isMuted.toggle()
+//        let visableVells = self.videoCollection.visibleCells
+//        switch self.isMuted {
+//        case true:
+//            visableVells.forEach { (cell) in
+//                if let cell = cell as? VideoCell {
+//                    if let player = cell.playerContainer.player {
+//                        player.isMuted = false
+//                    }
+//                }
+//            }
+//        case false:
+//            visableVells.forEach { (cell) in
+//                if let cell = cell as? VideoCell {
+//                    if let player = cell.playerContainer.player {
+//                        player.isMuted = true
+//                    }
+//                }
+//            }
+//
+//        }
+//        self.isMuted.toggle()
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }

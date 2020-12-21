@@ -42,9 +42,11 @@ class VideoCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.playerContainer.player?.pause()
+        playerContainer.player?.removeObserver(playerContainer, forKeyPath: "timeControlStatus")
         self.playerContainer.player = nil
         self.playerContainer.playerLayer?.removeFromSuperlayer()
         playerContainer.controlsContainerView.layer.sublayers?.filter{ $0 is CAGradientLayer }.forEach{ $0.removeFromSuperlayer() }
+       // playerContainer.subviews.forEach({$0.removeFromSuperview()})
     }
     private func setupContainer() {
         NSLayoutConstraint.activate([
@@ -80,11 +82,11 @@ class VideoCell: UICollectionViewCell {
                 case .failure(let err):
                     self.playerContainer.setupPlayer(url: url)
                     CacheManager.shared.cachFile(stringUrl: url.absoluteString) { [weak self] (result) in
-                        guard let self = self else {return}
+                        guard self != nil else {return}
                         switch result {
-                        case .success(let _) :
+                        case .success( _) :
                             print("cached")
-                        case .failure(let _) :
+                        case .failure( _) :
                             print("can't cach")
                         }
                     }

@@ -31,8 +31,8 @@ class VideoPlayerView : UIView {
         view.backgroundColor = .clear
         return view
     }()
-    lazy var videoPlayerHeader : VideoPlayerHeader = {
-        var view = VideoPlayerHeader()
+    lazy var videoInfoView : VideoInfoView = {
+        var view = VideoInfoView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -48,7 +48,7 @@ class VideoPlayerView : UIView {
         self.player = AVPlayer(url: url)
         self.playerLayer = AVPlayerLayer(player: player)
         self.layer.addSublayer(playerLayer!)
-        playerLayer!.frame = CGRect(x: 0, y: 90, width: self.frame.width, height: self.frame.height)
+        playerLayer!.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         playerLayer?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         playerLayer?.videoGravity = .resizeAspectFill
         self.player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
@@ -58,12 +58,22 @@ class VideoPlayerView : UIView {
             self.layoutUserInterFace()
             self.setupGradientLayer()
             self.setupVideoReactsView()
-            self.setupVideoHeader()
+            self.setupVideoInfoView()
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTapControlsContainer))
+            self.addGestureRecognizer(tapGesture)
         }
+       
+    }
+    @objc func onTapControlsContainer() {
+        print("Tapped")
     }
     private func playVideo() {
         guard player != nil else {return}
         self.player?.play()
+    }
+    private func pauseVideo() {
+        guard player != nil else {return}
+        self.player?.pause()
     }
     private func layoutUserInterFace() {
         self.setupControlsViewContainer()
@@ -94,18 +104,19 @@ class VideoPlayerView : UIView {
     private func setupVideoReactsView() {
         self.addSubview(self.videoReactsView)
         NSLayoutConstraint.activate([
-            self.videoReactsView.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: -20),
+            self.videoReactsView.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: -60),
             self.videoReactsView.trailingAnchor.constraint(equalTo: self.trailingAnchor , constant: -12),
-            self.videoReactsView.heightAnchor.constraint(equalToConstant: (3 * 40) + (2*10))
+            self.videoReactsView.heightAnchor.constraint(equalToConstant: (4 * 40) + (4*10))
         ])
     }
-    private func setupVideoHeader() {
-        self.addSubview(self.videoPlayerHeader)
+    private func setupVideoInfoView() {
+        self.addSubview(self.videoInfoView)
         NSLayoutConstraint.activate([
-            self.videoPlayerHeader.topAnchor.constraint(equalTo: self.topAnchor),
-            self.videoPlayerHeader.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.videoPlayerHeader.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.videoPlayerHeader.heightAnchor.constraint(equalToConstant: 90)
+            videoInfoView.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: -20),
+            videoInfoView.leadingAnchor.constraint(equalTo: self.leadingAnchor , constant: 10),
+            videoInfoView.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.6),
+            videoInfoView.heightAnchor.constraint(equalToConstant: 80)
+        
         ])
     }
     deinit {
@@ -121,13 +132,25 @@ extension VideoPlayerView  {
             let newStatus = AVPlayer.TimeControlStatus(rawValue: newValue)
             if newStatus != oldStatus {
                 DispatchQueue.main.async {[weak self] in
+                    guard let self = self else {return}
                     if newStatus == .playing || newStatus == .paused {
-                        self?.indicatorView.stopAnimating()
+                        self.indicatorView.stopAnimating()
+                        self.videoInfoView.playAnimation()
+                        self.videoReactsView.showAnimation()
                     } else {
-                        self?.indicatorView.startAnimating()
+                        self.indicatorView.startAnimating()
+                        self.videoInfoView.stopAnimation()
+                        self.videoReactsView.hideAnimation()
                     }
                 }
             }
         }
     }
 }
+
+
+//lazy var videoPlayerHeader : VideoPlayerHeader = {
+//    var view = VideoPlayerHeader()
+//    view.translatesAutoresizingMaskIntoConstraints = false
+//    return view
+//}()

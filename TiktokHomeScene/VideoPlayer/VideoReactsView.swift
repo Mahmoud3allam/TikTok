@@ -15,34 +15,55 @@ class VideoReactsView: UIView {
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .center
-        stack.spacing = 10
+        stack.spacing = 15
         return stack
     }()
     lazy var reactButton:ReactsSingleView = {
-       var bu = ReactsSingleView()
+        var bu = ReactsSingleView()
         bu.translatesAutoresizingMaskIntoConstraints  = false
         bu.backgroundColor = .clear
-        bu.reactImage.image = UIImage(systemName: "play")
-        bu.reactImage.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        bu.reactLabel.text = nil
+        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
         return bu
     }()
-    lazy var seenButton:ReactsSingleView = {
-       var bu = ReactsSingleView()
+    lazy var downVoteButton:ReactsSingleView = {
+        var bu = ReactsSingleView()
         bu.translatesAutoresizingMaskIntoConstraints  = false
         bu.backgroundColor = .clear
-        bu.reactImage.image = UIImage(systemName: "play")
+        bu.reactImage.image = UIImage(systemName: "icloud.and.arrow.down")
         bu.reactImage.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        bu.reactLabel.isHidden = true
+        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
         return bu
     }()
-    lazy var durationButton:ReactsSingleView = {
-       var bu = ReactsSingleView()
+    lazy var UpVoteButton:ReactsSingleView = {
+        var bu = ReactsSingleView()
         bu.translatesAutoresizingMaskIntoConstraints  = false
         bu.backgroundColor = .clear
-        bu.reactImage.image = UIImage(systemName: "play")
+        bu.reactImage.contentMode = .scaleAspectFit
+        bu.reactImage.image = UIImage(systemName: "arrow.up.message")
         bu.reactImage.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        bu.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        bu.reactLabel.isHidden = true
+        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        return bu
+    }()
+    lazy var commentsButton:ReactsSingleView = {
+        var bu = ReactsSingleView()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .clear
+        bu.reactImage.image = UIImage(systemName: "plus.message")
+        bu.reactImage.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        bu.reactLabel.isHidden = true
+        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        return bu
+    }()
+    lazy var profileButton:UIButton = {
+        var bu = UIButton()
+        bu.translatesAutoresizingMaskIntoConstraints  = false
+        bu.backgroundColor = .clear
+        bu.setImage(#imageLiteral(resourceName: "Allam"), for: .normal)
+        bu.clipsToBounds = true
+        bu.imageView?.contentMode = .scaleAspectFill
         return bu
     }()
     override init(frame: CGRect) {
@@ -56,9 +77,13 @@ class VideoReactsView: UIView {
     private func layoutUserInterFace() {
         self.AddSubViews()
         self.setupStackView()
+        self.setupProfileButton()
+        //self.profileButton.addTarget(self, action: #selector(didTappedProfileButton), for: .touchUpInside)
+        self.downVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedProfileButton)))
     }
     private func AddSubViews() {
         self.addSubview(self.verticalStackView)
+        self.addSubview(self.profileButton)
         
     }
     private func setupStackView() {
@@ -68,10 +93,30 @@ class VideoReactsView: UIView {
             self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        self.verticalStackView.addArrangedSubview(self.seenButton)
+        self.verticalStackView.addArrangedSubview(self.downVoteButton)
+        self.verticalStackView.addArrangedSubview(self.commentsButton)
+        self.verticalStackView.addArrangedSubview(self.UpVoteButton)
         self.verticalStackView.addArrangedSubview(self.reactButton)
-        self.verticalStackView.addArrangedSubview(self.durationButton)
 
+        
     }
-    
+    private func setupProfileButton() {
+        NSLayoutConstraint.activate([
+            self.profileButton.bottomAnchor.constraint(equalTo: self.verticalStackView.topAnchor , constant: -15),
+            self.profileButton.widthAnchor.constraint(equalToConstant: 60),
+            self.profileButton.heightAnchor.constraint(equalToConstant: 60),
+            self.profileButton.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor)
+        ])
+        self.profileButton.layer.cornerRadius = 30
+    }
+    func showAnimation(){
+        self.profileButton.setGradientBorder(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1))
+        self.profileButton.pulsate()
+    }
+    func hideAnimation() {
+      //  self.profileButton.layer.sublayers?.forEach({$0.removeFromSuperlayer()})
+    }
+    @objc func didTappedProfileButton() {
+        print("Tapped Profile")
+    }
 }

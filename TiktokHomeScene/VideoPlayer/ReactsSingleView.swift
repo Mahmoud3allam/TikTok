@@ -31,7 +31,7 @@ class ReactsSingleView: UIView {
         image.backgroundColor = .clear
         image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
-        image.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 60).isActive = true
         return image
     }()
     lazy var reactLabel: UILabel = {
