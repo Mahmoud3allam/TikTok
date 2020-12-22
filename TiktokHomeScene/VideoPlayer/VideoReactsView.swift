@@ -66,6 +66,7 @@ class VideoReactsView: UIView {
         bu.imageView?.contentMode = .scaleAspectFill
         return bu
     }()
+    var delegete:ReactsViewTaps!
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layoutUserInterFace()
@@ -78,8 +79,13 @@ class VideoReactsView: UIView {
         self.AddSubViews()
         self.setupStackView()
         self.setupProfileButton()
-        //self.profileButton.addTarget(self, action: #selector(didTappedProfileButton), for: .touchUpInside)
-        self.downVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedProfileButton)))
+        self.profileButton.addTarget(self, action: #selector(onTapDownVote), for: .touchUpInside)
+        self.downVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapDownVote)))
+        self.UpVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapUpVote)))
+        self.commentsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTappedComments)))
+        self.profileButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfile)))
+
+
     }
     private func AddSubViews() {
         self.addSubview(self.verticalStackView)
@@ -116,7 +122,26 @@ class VideoReactsView: UIView {
     func hideAnimation() {
       //  self.profileButton.layer.sublayers?.forEach({$0.removeFromSuperlayer()})
     }
-    @objc func didTappedProfileButton() {
+    @objc func onTapDownVote() {
         print("Tapped Profile")
+        delegete.didTappedDownVote()
     }
+    @objc func onTapUpVote() {
+        print("Tapped Profile")
+        delegete.didTapUpVote()
+    }
+    @objc func onTapProfile() {
+        print("Tapped Profile")
+        delegete.didTapProfileImage()
+    }
+    @objc func onTappedComments() {
+        delegete.onTappedComment()
+    }
+}
+
+protocol ReactsViewTaps {
+    func didTapProfileImage()
+    func didTapUpVote()
+    func didTappedDownVote()
+    func onTappedComment()
 }

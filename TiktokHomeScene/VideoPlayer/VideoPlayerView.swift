@@ -20,13 +20,14 @@ class VideoPlayerView : UIView {
         return view
     }()
     private lazy var indicatorView: UIActivityIndicatorView = {
-        var view = UIActivityIndicatorView(style: .whiteLarge)
+        var view = UIActivityIndicatorView(style: .large)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.startAnimating()
         return view
     }()
     lazy var videoReactsView : VideoReactsView = {
         var view = VideoReactsView()
+        view.delegete = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
@@ -59,13 +60,7 @@ class VideoPlayerView : UIView {
             self.setupGradientLayer()
             self.setupVideoReactsView()
             self.setupVideoInfoView()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTapControlsContainer))
-            self.addGestureRecognizer(tapGesture)
         }
-       
-    }
-    @objc func onTapControlsContainer() {
-        print("Tapped")
     }
     private func playVideo() {
         guard player != nil else {return}
@@ -116,7 +111,7 @@ class VideoPlayerView : UIView {
             videoInfoView.leadingAnchor.constraint(equalTo: self.leadingAnchor , constant: 10),
             videoInfoView.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.6),
             videoInfoView.heightAnchor.constraint(equalToConstant: 80)
-        
+            
         ])
     }
     deinit {
@@ -126,7 +121,6 @@ class VideoPlayerView : UIView {
 //MARK:- Observers
 extension VideoPlayerView  {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-
         if keyPath == "timeControlStatus", let change = change, let newValue = change[NSKeyValueChangeKey.newKey] as? Int, let oldValue = change[NSKeyValueChangeKey.oldKey] as? Int {
             let oldStatus = AVPlayer.TimeControlStatus(rawValue: oldValue)
             let newStatus = AVPlayer.TimeControlStatus(rawValue: newValue)
@@ -147,10 +141,18 @@ extension VideoPlayerView  {
         }
     }
 }
-
-
-//lazy var videoPlayerHeader : VideoPlayerHeader = {
-//    var view = VideoPlayerHeader()
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    return view
-//}()
+//MARK:- Reactions Taps
+extension VideoPlayerView : ReactsViewTaps {
+    func didTapProfileImage() {
+        print("Did Tap Profile Image")
+    }
+    func didTapUpVote() {
+        print("Did Tap Up Vote")
+    }
+     func didTappedDownVote() {
+        print("Did Tap Down Vote")
+    }
+    func onTappedComment() {
+        print("Did Tap Comment")
+    }
+}
