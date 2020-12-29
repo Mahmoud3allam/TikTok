@@ -20,13 +20,14 @@ class VideoPlayerView : UIView {
         return view
     }()
     private lazy var indicatorView: UIActivityIndicatorView = {
-        var view = UIActivityIndicatorView(style: .whiteLarge)
+        var view = UIActivityIndicatorView(style: .large)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.startAnimating()
         return view
     }()
     lazy var videoReactsView : VideoReactsView = {
         var view = VideoReactsView()
+        view.delegete = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
@@ -36,6 +37,14 @@ class VideoPlayerView : UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    lazy var playPauseView : PlayPauseView  = {
+        var view = PlayPauseView()
+        view.layer.cornerRadius = 14
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var isVideoPlaying: Bool = true
     override init(frame:CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .black
@@ -52,6 +61,10 @@ class VideoPlayerView : UIView {
         playerLayer?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         playerLayer?.videoGravity = .resizeAspectFill
         self.player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: .main) { [weak self] (notification) in
+            guard let self = self else {return}
+            self.finishedPlayingVideo()
+        }
         self.playVideo()
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {return}
@@ -59,13 +72,18 @@ class VideoPlayerView : UIView {
             self.setupGradientLayer()
             self.setupVideoReactsView()
             self.setupVideoInfoView()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onTapControlsContainer))
+            self.setupPlayPauseView()
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTappedPlayOrPause))
             self.addGestureRecognizer(tapGesture)
         }
-       
+        
     }
-    @objc func onTapControlsContainer() {
-        print("Tapped")
+    @objc func didTappedPlayOrPause(gesture:UIGestureRecognizer) {
+        self.isVideoPlaying ? self.pauseVideo() : self.playVideo()
+        self.isVideoPlaying ? self.playPauseView.setupImage(systemName: "play") : self.playPauseView.setupImage(systemName: "pause")
+        self.isVideoPlaying.toggle()
+        self.animatePausePlayButton()
+        print("isVideoPlaying : \(self.isVideoPlaying)")
     }
     private func playVideo() {
         guard player != nil else {return}
@@ -74,6 +92,8 @@ class VideoPlayerView : UIView {
     private func pauseVideo() {
         guard player != nil else {return}
         self.player?.pause()
+        self.videoInfoView.stopAnimation()
+        self.videoReactsView.hideAnimation()
     }
     private func layoutUserInterFace() {
         self.setupControlsViewContainer()
@@ -106,7 +126,7 @@ class VideoPlayerView : UIView {
         NSLayoutConstraint.activate([
             self.videoReactsView.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: -60),
             self.videoReactsView.trailingAnchor.constraint(equalTo: self.trailingAnchor , constant: -12),
-            self.videoReactsView.heightAnchor.constraint(equalToConstant: (4 * 40) + (4*10))
+            self.videoReactsView.heightAnchor.constraint(equalToConstant: ((3 * 40) + 60) + (4*10))
         ])
     }
     private func setupVideoInfoView() {
@@ -116,8 +136,27 @@ class VideoPlayerView : UIView {
             videoInfoView.leadingAnchor.constraint(equalTo: self.leadingAnchor , constant: 10),
             videoInfoView.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.6),
             videoInfoView.heightAnchor.constraint(equalToConstant: 80)
-        
+            
         ])
+    }
+    private func setupPlayPauseView() {
+        self.addSubview(self.playPauseView)
+        NSLayoutConstraint.activate([
+            self.playPauseView.widthAnchor.constraint(equalToConstant: 100),
+            self.playPauseView.heightAnchor.constraint(equalToConstant: 100),
+            self.playPauseView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+            self.playPauseView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0)
+        ])
+        self.playPauseView.transform = CGAffineTransform(scaleX: 0, y: 0)
+    }
+    private func animatePausePlayButton() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.playPauseView.transform = .identity
+        }) { (done) in
+            DispatchQueue.main.asyncAfter(deadline: .now() ) {
+                self.playPauseView.transform = CGAffineTransform(scaleX: 0, y: 0)
+            }
+        }
     }
     deinit {
         print("De init")
@@ -126,7 +165,6 @@ class VideoPlayerView : UIView {
 //MARK:- Observers
 extension VideoPlayerView  {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-
         if keyPath == "timeControlStatus", let change = change, let newValue = change[NSKeyValueChangeKey.newKey] as? Int, let oldValue = change[NSKeyValueChangeKey.oldKey] as? Int {
             let oldStatus = AVPlayer.TimeControlStatus(rawValue: oldValue)
             let newStatus = AVPlayer.TimeControlStatus(rawValue: newValue)
@@ -146,11 +184,27 @@ extension VideoPlayerView  {
             }
         }
     }
+    @objc func finishedPlayingVideo() {
+        print("Finished Playing Video")
+        if let player = self.player {
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+    }
+}
+//MARK:- Reactions Taps
+extension VideoPlayerView : ReactsViewTaps {
+    func didTapProfileImage() {
+        print("Did Tap Profile Image")
+    }
+    func didTapUpVote() {
+        print("Did Tap Up Vote")
+    }
+     func didTappedDownVote() {
+        print("Did Tap Down Vote")
+    }
+    func onTappedComment() {
+        print("Did Tap Comment")
+    }
 }
 
-
-//lazy var videoPlayerHeader : VideoPlayerHeader = {
-//    var view = VideoPlayerHeader()
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    return view
-//}()

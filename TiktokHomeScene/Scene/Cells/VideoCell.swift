@@ -46,7 +46,6 @@ class VideoCell: UICollectionViewCell {
         self.playerContainer.player = nil
         self.playerContainer.playerLayer?.removeFromSuperlayer()
         playerContainer.controlsContainerView.layer.sublayers?.filter{ $0 is CAGradientLayer }.forEach{ $0.removeFromSuperlayer() }
-       // playerContainer.subviews.forEach({$0.removeFromSuperview()})
     }
     private func setupContainer() {
         NSLayoutConstraint.activate([
@@ -69,7 +68,7 @@ class VideoCell: UICollectionViewCell {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {return}
             if let cachedItemCount = CacheManager.shared.getNumberOfCachedItems() {
-                if cachedItemCount >= 10 {
+                if cachedItemCount >= 20 {
                     CacheManager.shared.clearCache()
                     print("Cache Cleared")
                 }

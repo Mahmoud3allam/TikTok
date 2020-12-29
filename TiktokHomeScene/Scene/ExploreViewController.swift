@@ -19,7 +19,7 @@ class ExploreViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .black
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.isNavigationBarHidden = true
-       // CacheManager.shared.clearCache()
+//        CacheManager.shared.clearCache()
         // Do any additional setup after loading the view.
     }
     override func loadView() {
