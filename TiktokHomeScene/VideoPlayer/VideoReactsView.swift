@@ -18,14 +18,14 @@ class VideoReactsView: UIView {
         stack.spacing = 15
         return stack
     }()
-    lazy var reactButton:ReactsSingleView = {
-        var bu = ReactsSingleView()
-        bu.translatesAutoresizingMaskIntoConstraints  = false
-        bu.backgroundColor = .clear
-        bu.reactLabel.text = nil
-        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        return bu
-    }()
+//    lazy var reactButton:ReactsSingleView = {
+//        var bu = ReactsSingleView()
+//        bu.translatesAutoresizingMaskIntoConstraints  = false
+//        bu.backgroundColor = .clear
+//        bu.reactLabel.text = nil
+//        bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
+//        return bu
+//    }()
     lazy var downVoteButton:ReactsSingleView = {
         var bu = ReactsSingleView()
         bu.translatesAutoresizingMaskIntoConstraints  = false
@@ -57,14 +57,17 @@ class VideoReactsView: UIView {
         bu.widthAnchor.constraint(equalToConstant: 60).isActive = true
         return bu
     }()
-    lazy var profileButton:UIButton = {
-        var bu = UIButton()
-        bu.translatesAutoresizingMaskIntoConstraints  = false
-        bu.backgroundColor = .clear
-        bu.setImage(#imageLiteral(resourceName: "Allam"), for: .normal)
-        bu.clipsToBounds = true
-        bu.imageView?.contentMode = .scaleAspectFill
-        return bu
+    lazy var profileImageView:UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints  = false
+        imageView.backgroundColor = .clear
+        imageView.image = #imageLiteral(resourceName: "Allam")
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        return imageView
     }()
     var delegete:ReactsViewTaps!
     override init(frame: CGRect) {
@@ -79,22 +82,19 @@ class VideoReactsView: UIView {
         self.AddSubViews()
         self.setupStackView()
         self.setupProfileButton()
-        self.profileButton.addTarget(self, action: #selector(onTapDownVote), for: .touchUpInside)
         self.downVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapDownVote)))
         self.UpVoteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapUpVote)))
         self.commentsButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTappedComments)))
-        self.profileButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfile)))
-
-
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfile)))
     }
     private func AddSubViews() {
+        self.isUserInteractionEnabled = true
         self.addSubview(self.verticalStackView)
-        self.addSubview(self.profileButton)
-        
+        self.addSubview(self.profileImageView)
     }
     private func setupStackView() {
         NSLayoutConstraint.activate([
-            self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.verticalStackView.heightAnchor.constraint(equalToConstant: (3*40 + 2*10)),
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -102,36 +102,34 @@ class VideoReactsView: UIView {
         self.verticalStackView.addArrangedSubview(self.downVoteButton)
         self.verticalStackView.addArrangedSubview(self.commentsButton)
         self.verticalStackView.addArrangedSubview(self.UpVoteButton)
-        self.verticalStackView.addArrangedSubview(self.reactButton)
+//        self.verticalStackView.addArrangedSubview(self.reactButton)
 
         
     }
     private func setupProfileButton() {
         NSLayoutConstraint.activate([
-            self.profileButton.bottomAnchor.constraint(equalTo: self.verticalStackView.topAnchor , constant: -15),
-            self.profileButton.widthAnchor.constraint(equalToConstant: 60),
-            self.profileButton.heightAnchor.constraint(equalToConstant: 60),
-            self.profileButton.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor)
+            self.profileImageView.bottomAnchor.constraint(equalTo: self.verticalStackView.topAnchor , constant: -15),
+            self.profileImageView.widthAnchor.constraint(equalToConstant: 60),
+            self.profileImageView.heightAnchor.constraint(equalToConstant: 60),
+            self.profileImageView.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor)
         ])
-        self.profileButton.layer.cornerRadius = 30
+        self.profileImageView.layer.cornerRadius = 30
+
     }
     func showAnimation(){
-        self.profileButton.setGradientBorder(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1))
-        self.profileButton.pulsate()
+        self.profileImageView.setGradientBorder(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1))
+        self.profileImageView.pulsate()
     }
     func hideAnimation() {
       //  self.profileButton.layer.sublayers?.forEach({$0.removeFromSuperlayer()})
     }
     @objc func onTapDownVote() {
-        print("Tapped Profile")
         delegete.didTappedDownVote()
     }
     @objc func onTapUpVote() {
-        print("Tapped Profile")
         delegete.didTapUpVote()
     }
     @objc func onTapProfile() {
-        print("Tapped Profile")
         delegete.didTapProfileImage()
     }
     @objc func onTappedComments() {

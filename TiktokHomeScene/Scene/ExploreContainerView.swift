@@ -98,6 +98,19 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected")
+
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == DataService.shared.getExploreVideos().count - 1 {
+            print("Here we can hanlde Pagination !")
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.prepareForReuse()
+    }
+    
+
+}
 //        let visableVells = self.videoCollection.visibleCells
 //        switch self.isMuted {
 //        case true:
@@ -119,12 +132,6 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
 //
 //        }
 //        self.isMuted.toggle()
-    }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    }
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.prepareForReuse()
-    }
 //    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 //        self.videoCollection.visibleCells.forEach({ (cell) in
 //            if cell.isKind(of: VideoCell.self) {
@@ -138,4 +145,3 @@ extension ExploreViewContainer : UICollectionViewDataSource , UICollectionViewDe
 //            }
 //        })
 //    }
-}

@@ -25,6 +25,7 @@
 		18D02A5B258A2512006E721F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D02A59258A2512006E721F /* LaunchScreen.storyboard */; };
 		18D85201258A3AAA002A1835 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D85200258A3AAA002A1835 /* VideoPlayerView.swift */; };
 		18D85204258A7C92002A1835 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D85203258A7C92002A1835 /* DataService.swift */; };
+		18DA548D25921A08006AE2FD /* PlayPauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DA548C25921A08006AE2FD /* PlayPauseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		18D02A5C258A2512006E721F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18D85200258A3AAA002A1835 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		18D85203258A7C92002A1835 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		18DA548C25921A08006AE2FD /* PlayPauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				1852B726258B60C200E26DDE /* ReactsSingleView.swift */,
 				1852B728258B610E00E26DDE /* VideoPlayerHeader.swift */,
 				182236042590813500A22B6B /* VideoInfoView.swift */,
+				18DA548C25921A08006AE2FD /* PlayPauseView.swift */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				182236082590846400A22B6B /* UIView.swift in Sources */,
 				1852B729258B610E00E26DDE /* VideoPlayerHeader.swift in Sources */,
 				18D85201258A3AAA002A1835 /* VideoPlayerView.swift in Sources */,
+				18DA548D25921A08006AE2FD /* PlayPauseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
